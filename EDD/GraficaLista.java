@@ -1,7 +1,9 @@
 import java.util.Iterator;
 import Estructuras.ListaDoblementeLigada;
+import Estructuras.PIlaYCola.*;
 
 public class GraficaLista<T> implements Grafica<T> {
+
     private class Adyacencia {
         T nombre;
         int peso;
@@ -33,8 +35,16 @@ public class GraficaLista<T> implements Grafica<T> {
     }
 
     @Override
-    public void agregarVertice(T elemento){
-        // Algoritmo 1.1
+    public void agregarVertice(T elemento) {
+        for (Vertice v : this.vertices) {
+            if (v.nombre.equals(elemento)) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        Vertice nuevoVertice = new Vertice(elemento);
+        this.vertices.agregarFinal(nuevoVertice);
+        this.numVertices++;
     }
 
     @Override
@@ -43,56 +53,179 @@ public class GraficaLista<T> implements Grafica<T> {
     }
 
     @Override
-    public void agregarAristaPonderada(T e1, T e2, int peso){
-        // Algoritmo 1.2
+    public void agregarAristaPonderada(T e1, T e2, int peso) {
+        if (e1.equals(e2)) {
+            throw new IllegalArgumentException();
+        }
+        if (peso <= 0) {
+            throw new IllegalArgumentException();
+        }
+
+        Vertice vertice1 = null;
+        Vertice vertice2 = null;
+
+        for (Vertice v : this.vertices) {
+            if (v.nombre.equals(e1)) vertice1 = v;
+            if (v.nombre.equals(e2)) vertice2 = v;
+        }
+
+        if (vertice1 == null || vertice2 == null) {
+            throw new IllegalArgumentException();
+        }
+
+        for (Adyacencia ady : vertice1.adyacencias) {
+            if (ady.nombre.equals(e2)) {
+                return;
+            }
+        }
+
+        Adyacencia adyHaciaE2 = new Adyacencia(e2, peso);
+        Adyacencia adyHaciaE1 = new Adyacencia(e1, peso);
+
+        vertice1.adyacencias.agregarFinal(adyHaciaE2);
+        vertice2.adyacencias.agregarFinal(adyHaciaE1);
+
+        this.numAristas++;
     }
 
     @Override
-    public ListaDoblementeLigada<T> devolverBfs(T inicio){
-        // Algoritmo 1.3
-        return new ListaDoblementeLigada<>(); 
+    public ListaDoblementeLigada<T> devolverBfs(T inicio) {
+        ListaDoblementeLigada<T> recorrido = new ListaDoblementeLigada<>();
+        ListaDoblementeLigada<T> visitados = new ListaDoblementeLigada<>();
+        Cola<Vertice> c = new Cola<>();
+
+        Vertice vInicio = null;
+        for (Vertice v : this.vertices) {
+            if (v.nombre.equals(inicio)) {
+                vInicio = v;
+                break;
+            }
+        }
+
+        if (vInicio == null) {
+            throw new IllegalArgumentException();
+        }
+
+        c.meter(vInicio);
+        visitados.agregarFinal(vInicio.nombre);
+
+        while (!c.estaVacia()) {
+            Vertice actual = c.sacar();
+            recorrido.agregarFinal(actual.nombre);
+
+            for (Adyacencia ady : actual.adyacencias) {
+                boolean visitado = false;
+                for (T visit : visitados) {
+                    if (visit.equals(ady.nombre)) {
+                        visitado = true;
+                        break;
+                    }
+                }
+
+                if (!visitado) {
+                    visitados.agregarFinal(ady.nombre);
+                    for (Vertice v : this.vertices) {
+                        if (v.nombre.equals(ady.nombre)) {
+                            c.meter(v);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return recorrido;
     }
 
     @Override
     public ListaDoblementeLigada<T> devolverDfs(T inicio) {
-        // Algoritmo 1.4
-        return new ListaDoblementeLigada<>(); 
+        ListaDoblementeLigada<T> recorrido = new ListaDoblementeLigada<>();
+        ListaDoblementeLigada<T> visitados = new ListaDoblementeLigada<>();
+        Pila<Vertice> p = new Pila<>();
+
+        Vertice vInicio = null;
+        for (Vertice v : this.vertices) {
+            if (v.nombre.equals(inicio)) {
+                vInicio = v;
+                break;
+            }
+        }
+
+        if (vInicio == null) {
+            throw new IllegalArgumentException();
+        }
+
+        p.meter(vInicio);
+
+        while (!p.estaVacia()) {
+            Vertice actual = p.sacar();
+
+            boolean visitadoActual = false;
+            for (T visit : visitados) {
+                if (visit.equals(actual.nombre)) {
+                    visitadoActual = true;
+                    break;
+                }
+            }
+
+            if (!visitadoActual) {
+                visitados.agregarFinal(actual.nombre);
+                recorrido.agregarFinal(actual.nombre);
+
+                for (Adyacencia ady : actual.adyacencias) {
+                    boolean visitado = false;
+                    for (T visit : visitados) {
+                        if (visit.equals(ady.nombre)) {
+                            visitado = true;
+                            break;
+                        }
+                    }
+
+                    if (!visitado) {
+                        for (Vertice v : this.vertices) {
+                            if (v.nombre.equals(ady.nombre)) {
+                                p.meter(v);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return recorrido;
     }
 
     @Override
-    public void eliminarVertice(T elemento){
-        // Algoritmo 1.5
+    public void eliminarVertice(T elemento) {
     }
 
     @Override
-    public void eliminarArista(T e1, T e2){
-        // Algoritmo 1.6
+    public void eliminarArista(T e1, T e2) {
     }
 
     @Override
-    public ListaDoblementeLigada<T> devolverRutaMasCortaNoPonderada(T inicio, T fin){
-        // Algoritmo 1.7
-        return new ListaDoblementeLigada<>(); 
-    }
-    
-    @Override
-    public ListaDoblementeLigada<T> rutaMasCortaPonderada(T inicio, T fin){
-        // Algoritmo 1.8 (Dijkstra)
-        return new ListaDoblementeLigada<>(); 
+    public ListaDoblementeLigada<T> devolverRutaMasCortaNoPonderada(T inicio, T fin) {
+        return new ListaDoblementeLigada<>();
     }
 
     @Override
-    public int devolverNumeroDeVertices(){
+    public ListaDoblementeLigada<T> rutaMasCortaPonderada(T inicio, T fin) {
+        return new ListaDoblementeLigada<>();
+    }
+
+    @Override
+    public int devolverNumeroDeVertices() {
         return numVertices;
     }
-    
+
     @Override
-    public int devolverNumeroDeAristas(){
+    public int devolverNumeroDeAristas() {
         return numAristas;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null; 
+        return null;
     }
 }
