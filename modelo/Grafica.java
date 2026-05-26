@@ -1,3 +1,5 @@
+package modelo;
+
 import Estructuras.ListaDoblementeLigada;
 
 public interface Grafica<T> extends Iterable<T> {
