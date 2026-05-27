@@ -1,0 +1,48 @@
+// FORMATO: Nombre__estación, estaCerrada
+
+// Linea rosa
+Observatorio; false
+Tacubaya; false
+Juanacatlán; false
+Chapultepec; false
+Sevilla; false
+Insurgentes; false
+Zapata; false 
+Polanco; false
+
+// Linea azul
+Tacubaya; false
+Normal; false
+Colegio Militar; false
+Popotla; false
+Cuitláhuac; false
+Tacuba; false
+Panteones; false
+Cuatro Caminos; false
+
+// Linea amarilla
+El Rosario; false
+Aquiles Serdán; false
+Camarones; false
+Refinería; false
+Tacuba; false
+Polanco; false
+San Joaquín; false
+
+// Linea dorada
+Universidad; false
+Copilco; false
+Miguel Ángel de Quevedo; false
+Viveros; false
+Coyoacán; false
+Zapata; false
+Chabacano; false
+
+// Linea verde
+Chabacano; false
+Obrera; false
+Doctores; false
+Salto del Agua; false
+San Juan de Letrán; false
+Bellas Artes; false
+Gartibaldi; false

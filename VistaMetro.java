@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import Estructuras.ListaDoblementeLigada;
+
 public class VistaMetro {
     private Scanner in;
 
@@ -15,10 +17,9 @@ public class VistaMetro {
         "\n" +
         "¡BIENVENIDO AL METRO DE LA CIUDAD DE MÉXICO! \n" +
         "\n" +
-        "╔═ 1. Mostrar ruta mas corta (menor número de estaciones). \n" +
+        "╠═ 1. Mostrar ruta mas corta (menor número de estaciones). \n" +
         "╠═ 2. Mostrar ruta más rápida (menor cantidad de tiempo). \n" +
-        "╠═ 3. Reportar estaciones cerradas. \n" +
-        "╚═ 4. Reportar tramos cerrados. \n"
+        "╠═ 3. Salir."
         );
     }
 
@@ -33,7 +34,19 @@ public class VistaMetro {
         return eleccion;
     }
 
-    public String solicitarEstaciones() {
-        
+    public String solicitarEstacion(String msg) {
+        System.out.println(msg);
+        String estUsuario = in.nextLine();
+        return estUsuario;
+    }
+
+    public void mostrarRuta(ListaDoblementeLigada<?> ruta) {
+        if(ruta == null || ruta.devolverLongitud() == 0) {
+            System.out.println("ERROR! No se encontró una ruta disponible :(.");
+            return;
+        }
+
+        System.out.println("══════ RUTA ENCONTRADA ══════");
+        System.out.println(ruta.toString());
     }
 }
