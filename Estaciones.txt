@@ -3,7 +3,7 @@
 // Linea rosa
 Observatorio; false
 Tacubaya; false
-Juanacatlán; false
+Juanacatlan; false
 Chapultepec; false
 Sevilla; false
 Insurgentes; false
@@ -15,26 +15,26 @@ Tacubaya; false
 Normal; false
 Colegio Militar; false
 Popotla; false
-Cuitláhuac; false
+Cuitlahuac; false
 Tacuba; false
 Panteones; false
 Cuatro Caminos; false
 
 // Linea amarilla
 El Rosario; false
-Aquiles Serdán; false
+Aquiles Serdan; false
 Camarones; false
-Refinería; false
+Refineria; false
 Tacuba; false
 Polanco; false
-San Joaquín; false
+San Joaquin; false
 
 // Linea dorada
 Universidad; false
 Copilco; false
-Miguel Ángel de Quevedo; false
+Miguel Angel de Quevedo; false
 Viveros; false
-Coyoacán; false
+Coyoacan; false
 Zapata; false
 Chabacano; false
 
@@ -43,6 +43,6 @@ Chabacano; false
 Obrera; false
 Doctores; false
 Salto del Agua; false
-San Juan de Letrán; false
+San Juan de Letran; false
 Bellas Artes; false
-Gartibaldi; false
+Garibaldi; false

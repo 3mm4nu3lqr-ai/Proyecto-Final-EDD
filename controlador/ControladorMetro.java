@@ -26,11 +26,11 @@ public class ControladorMetro {
      * Constructor de la clase ControladorMetro.
      * Inicializa los componentes principales del patrón MVC para el sistema.
      * 
-     * @param modelo El grafo que almacena las estaciones y sus conexiones.
+     * @param modelo La gráfica que almacena las estaciones y sus conexiones.
      * @param vista  La interfaz gráfica o de usuario asociada.
      */
-    public ControladorMetro(GraficaLista<Estacion> modelo, VistaMetro vista) {
-        this.modelo = modelo;
+    public ControladorMetro(VistaMetro vista) {
+        this.modelo = new GraficaLista<Estacion>();
         this.vista = vista;
     }
 
@@ -111,12 +111,85 @@ public class ControladorMetro {
                     String estacion2 = datosTramo[1].trim();
                     int peso = Integer.parseInt(datosTramo[2].trim());
                     Boolean estaCerrada = Boolean.parseBoolean(datosTramo[3].trim());
+
+                    Estacion e1 = modelo.buscarPorNombre(estacion1);
+                    Estacion e2 = modelo.buscarPorNombre(estacion2);
+
+                    if(e1 != null && e2 != null && estaCerrada != true) {
+                        modelo.agregarAristaPonderada(e1, e2, peso);
+                    } else {
+                        System.out.println("Error, no se pudo conectar: " + estacion1 + " con " + estacion2);
+                    }
+                    
                 }
 
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+
+            bf.close();
+        } catch (IOException e) {
+            System.out.println("ERROR! No se pudieron cargar los tramos: " + e);
         }
+    }
+
+    public void iniciarGrafica() {
+        System.out.println("Iniciando...");
+
+        String archivoEstaciones = "Estaciones.txt";
+        System.out.println("Cargando estaciones desde " + archivoEstaciones);
+        this.cargarEstaciones(archivoEstaciones);
+
+        String archivoTramos = "Tramos.txt";
+        System.out.println("Cargando tramos desde " + archivoTramos);
+        this.cargarTramos(archivoTramos);        
+    }
+
+    public void iniciar() {
+        boolean continuar = true;
+
+        while (continuar == true) {
+
+            int eleccion = vista.devolverEleccion();
+
+            switch (eleccion) {
+                case 1:
+                
+                    String estacionInicioNombre = vista.solicitarEstacion("Por favor, introduzca la estación de inicio (no ponga acentos)");
+                    String estacionDestinoNombre = vista.solicitarEstacion("Por favor, introduzca la estación destino (no ponga acentos)");
+
+                    Estacion estInicio = new Estacion(estacionInicioNombre, false);
+                    Estacion estDestino = new Estacion(estacionDestinoNombre, false);
+
+                    ListaDoblementeLigada<Estacion> rutaMasCortaNoPonderada = modelo.devolverRutaMasCortaNoPonderada(estInicio, estDestino);
+
+                    System.out.println("La ruta que debe seguir es la siguiente: " + rutaMasCortaNoPonderada.toString());
+
+                    break;
+                case 2:
+
+                    String estInicioNombre = vista.solicitarEstacion("Por favor, introduzca la estación de inicio (no ponga acentos)");
+                    String estDestinoNombre = vista.solicitarEstacion("Por favor, introduzca la estación destino (no ponga acentos)");
+
+                    Estacion estIni = new Estacion(estInicioNombre, false);
+                    Estacion estDest = new Estacion(estDestinoNombre, false);
+
+                    ListaDoblementeLigada<Estacion> rutaMasCortaPonderada = modelo.rutaMasCortaPonderada(estIni, estDest);
+
+                    System.out.println("La ruta que debe seguir es la siguiente: " + rutaMasCortaPonderada.toString());
+        
+                    break;
+
+                case 3:
+                    System.out.println("Gracias por usar el sistema del metro!");
+                    continuar = false;
+                    break;
+
+                default:
+
+                    System.out.println("Opción inválida, intente de nuevo.");
+                    break;
+            }
+        }
+        
     }
 
 }

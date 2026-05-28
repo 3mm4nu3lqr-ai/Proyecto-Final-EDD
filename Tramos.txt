@@ -2,8 +2,8 @@
 
 // Linea rosa
 Observatorio; Tacubaya; 3; false
-Tacubaya; Juanacatlán; 7; false
-Juanacatlán; Chapultepec; 5; false
+Tacubaya; Juanacatlan; 7; false
+Juanacatlan; Chapultepec; 5; false
 Chapultepec; Sevilla; 6; false
 Sevilla; Insurgentes; 2; false
 Insurgentes; Zapata; 8; false
@@ -13,31 +13,31 @@ Zapata; Polanco; 4; false
 Tacubaya; Normal; 2; false
 Normal; Colegio Militar; 7; false
 Colegio Militar; Popotla; 4; false
-Popotla; Cuitláhuac; 5; false
-Cuitláhuac; Tacuba; 8; false
+Popotla; Cuitlahuac; 5; false
+Cuitlahuac; Tacuba; 8; false
 Tacuba; Panteones; 3; false
 Panteones; Cuatro Caminos; 6; false
 
 // Linea amarilla
-El Rosario; Aquiles Serdán; 5; false
-Aquiles Serdán; Camarones; 3; false
-Camarones; Refinería; 7; false
-Refinería; Tacuba; 2; false
+El Rosario; Aquiles Serdan; 5; false
+Aquiles Serdan; Camarones; 3; false
+Camarones; Refineria; 7; false
+Refineria; Tacuba; 2; false
 Tacuba; Polanco; 6; false
-Polanco; San Joaquín; 4; false
+Polanco; San Joaquin; 4; false
 
 // Linea dorada
 Universidad; Copilco; 8; false
-Copilco; Miguel Ángel de Quevedo; 4; false
-Miguel Ángel de Quevedo; Viveros; 5; false
-Viveros; Coyoacán; 7; false
-Coyoacán; Zapata; 3; false
+Copilco; Miguel Angel de Quevedo; 4; false
+Miguel Angel de Quevedo; Viveros; 5; false
+Viveros; Coyoacan; 7; false
+Coyoacan; Zapata; 3; false
 Zapata; Chabacano; 6; false
 
 // Linea verde
 Chabacano; Obrera; 6; false
 Obrera; Doctores; 3; false
 Doctores; Salto del Agua; 7; false
-Salto del Agua; San Juan de Letrán; 4; false
-San Juan de Letrán; Bellas Artes; 2; false
+Salto del Agua; San Juan de Letran; 4; false
+San Juan de Letran; Bellas Artes; 2; false
 Bellas Artes; Garibaldi; 8; false

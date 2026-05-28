@@ -27,20 +27,9 @@ public class Estacion {
         this.estaCerrada = estaCerrada;
     }
 
-    /**
-     * Método que compara esta estación con otra para determinar si son iguales.
-     * La igualdad se define basándose únicamente en la coincidencia de los nombres.
-     * 
-     * @param otro La otra estación con la que se va a comparar.
-     * @return true si ambos nombres son iguales; false en caso contrario.
-     */
     @Override
-    public boolean equals(Estacion otro) {
-        if(this.nombre.equals(otro.nombre)) {
-            return true;
-        } else {
-            return false;
-        }
+    public String toString() {
+        return this.nombre;
     }
 
 }

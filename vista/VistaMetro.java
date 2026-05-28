@@ -1,7 +1,7 @@
 package vista;
 import java.util.Scanner;
 
-import Estructuras.ListaDoblementeLigada;
+import Estructuras.*;
 
 public class VistaMetro {
     private Scanner in;

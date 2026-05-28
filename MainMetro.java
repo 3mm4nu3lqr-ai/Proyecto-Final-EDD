@@ -1,27 +1,15 @@
-import Estructuras.ListaDoblementeLigada;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import controlador.*;
+import vista.*;
 
 public class MainMetro {
     public static void main(String[] args) {
-        try {
-            FileReader fr = new FileReader("Estaciones.txt");
-            BufferedReader bf = new BufferedReader(fr);
+        VistaMetro vista = new VistaMetro();
+        ControladorMetro controlador = new ControladorMetro(vista);
 
-            String linea;
+        controlador.iniciarGrafica();
 
-            while((linea = bf.readLine()) != null) {
-                linea = linea.trim();
+        vista.mostrarMenu();
 
-                if(!linea.isEmpty() && !linea.startsWith("//")) {
-                    String[] datosEstacion = linea.split("; ");
-                    
-                    System.out.println(datosEstacion[0] + ", " + datosEstacion[1]);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("ERROR! " + e);
-        }
+        controlador.iniciar();
     }
 }

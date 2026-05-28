@@ -54,6 +54,20 @@ public class GraficaLista<T> implements Grafica<T> {
         this.numAristas = 0;
     }
 
+    public T buscarPorNombre(String nombre) {
+        int totalVertices = this.numVertices;
+
+        for(int i = 0; i < totalVertices; i++) {
+            Vertice actual = (Vertice) this.vertices.acceder(i);
+
+            if(actual.nombre.toString().trim().equalsIgnoreCase(nombre.trim())) {
+                return actual.nombre;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void agregarVertice(T elemento) {
         for (Vertice v : this.vertices) {
@@ -331,9 +345,28 @@ public class GraficaLista<T> implements Grafica<T> {
 
         Vertice vInicio = null;
         Vertice vFin = null;
-        for (Vertice v : this.vertices) {
-            if (v.nombre.equals(inicio)) vInicio = v;
-            if (v.nombre.equals(fin)) vFin = v;
+        String nombreInicio = inicio.toString().trim();
+        String nombreFin = fin.toString().trim();
+
+        // 🕵️‍♂️ Imprime lo que metió el usuario:
+        System.out.println("DEBUG: Buscando inicio -> [" + nombreInicio + "]");
+        System.out.println("DEBUG: Buscando fin -> [" + nombreFin + "]");
+
+        for (int i = 0; i < this.numVertices; i++) {
+            Vertice v = (Vertice) this.vertices.acceder(i);
+            String nombreVertice = v.nombre.toString().trim();
+
+            // 🕵️‍♂️ Imprime las primeras 3 estaciones del grafo para ver cómo se llaman en memoria:
+            if (i < 3) {
+                System.out.println("DEBUG: Estación en grafo n°" + i + " -> [" + nombreVertice + "]");
+            }
+
+            if (nombreVertice.equalsIgnoreCase(nombreInicio)) {
+                vInicio = v;
+            }
+            if (nombreVertice.equalsIgnoreCase(nombreFin)) {
+                vFin = v;
+            }
         }
 
         if (vInicio == null || vFin == null) {
