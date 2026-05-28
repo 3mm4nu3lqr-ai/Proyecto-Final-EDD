@@ -60,15 +60,20 @@ public class ControladorMetro {
                     // Descompone la línea en un arreglo utilizando el delimitador ";"
                     String[] datosEstacion = linea.split(";");
 
-                    // Extrae y limpia los atributos de la estación
                     String nombreEstacion = datosEstacion[0].trim();
                     Boolean estaCerrada = Boolean.parseBoolean(datosEstacion[1].trim());
 
-                    // Instancia un nuevo objeto Estacion con los valores obtenidos
-                    Estacion estacion = new Estacion(nombreEstacion, estaCerrada);
+                    // 1. Intentamos buscar si la estación YA FUE CREADA antes
+                    Estacion estacionExistente = modelo.buscarPorNombre(nombreEstacion);
 
-                    // Agrega la estación creada como un vértice en la estructura del grafo
-                    modelo.agregarVertice(estacion);
+                    if (estacionExistente == null) {
+                        // Si NO existe, creamos la estación y la agregamos como vértice normal
+                        Estacion nuevaEstacion = new Estacion(nombreEstacion, estaCerrada);
+                        modelo.agregarVertice(nuevaEstacion);
+                    } else {
+                        // Si YA existe, no la agregamos a la gráfica para evitar el Exception.
+                        System.out.println("DEBUG: Saltando estación duplicada (transbordo) -> " + nombreEstacion);
+                    }
                 }
                 
             }
@@ -115,10 +120,10 @@ public class ControladorMetro {
                     Estacion e1 = modelo.buscarPorNombre(estacion1);
                     Estacion e2 = modelo.buscarPorNombre(estacion2);
 
-                    if(e1 != null && e2 != null && estaCerrada != true) {
+                    if(e1 != null && e2 != null && estaCerrada != true && e1.estaCerrada != true && e2.estaCerrada != true) {
                         modelo.agregarAristaPonderada(e1, e2, peso);
                     } else {
-                        System.out.println("Error, no se pudo conectar: " + estacion1 + " con " + estacion2);
+                        System.out.println("DEBUG: Omitiendo tramo de " + estacion1 + " con " + estacion2);
                     }
                     
                 }

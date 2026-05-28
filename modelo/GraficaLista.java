@@ -11,15 +11,14 @@ import Estructuras.PIlaYCola.*;
  * @date 27-Mayo-2026
  * @author Fernando Chablé Alonso, Pablo de Jesús Peréz Megchun y Emmanuel Quirino Roman
  */
+
 public class GraficaLista<T> implements Grafica<T> {
 
     /**
      * Clase interna en la que se representa una conexión (arista) hacia otro vértice dentro de la gráfica.
      */
     private class Adyacencia {
-        /** El identificador del vértice al que se dirige la conexión. */
         T nombre;
-        /** El peso, costo o tiempo que se toma al transitar por esta arista. */
         int peso;
 
         /**
@@ -39,9 +38,7 @@ public class GraficaLista<T> implements Grafica<T> {
      * Clase interna en la que se representa un vértice dentro de la estructura de la gráfica.
      */
     private class Vertice {
-        /** El elemento que se almacena y que define al vértice. */
         T nombre;
-        /** Lista en la que se guardan las adyacencias (aristas) que salen de este vértice. */
         ListaDoblementeLigada<Adyacencia> adyacencias;
 
         /**
@@ -61,11 +58,9 @@ public class GraficaLista<T> implements Grafica<T> {
      * Se almacena la relación entre un vértice y el vértice anterior del cual se provino.
      */
     private class ParPredecesor {
-        /** El vértice que se evalúa actualmente. */
         T vertice;
-        /** El vértice del cual se provino en el recorrido. */
         T predecesor;
-        
+
         /**
          * Constructor de la clase ParPredecesor.
          * 
@@ -83,11 +78,9 @@ public class GraficaLista<T> implements Grafica<T> {
      * Se almacena la distancia mínima acumulada para llegar a un vértice específico.
      */
     private class ParDistancia {
-        /** El vértice que se evalúa. */
         T vertice;
-        /** La distancia mínima que se calcula hacia el vértice. */
         int distancia;
-        
+
         /**
          * Constructor de la clase ParDistancia.
          * 
@@ -100,13 +93,9 @@ public class GraficaLista<T> implements Grafica<T> {
         }
     }
 
-    /** La lista principal en la que se contienen todos los vértices de la gráfica. */
+
     public ListaDoblementeLigada<Vertice> vertices;
-    
-    /** El número total de vértices que se registran en la gráfica. */
     int numVertices;
-    
-    /** El número total de aristas que se registran en la gráfica. */
     int numAristas;
 
     /**
@@ -117,6 +106,25 @@ public class GraficaLista<T> implements Grafica<T> {
         this.vertices = new ListaDoblementeLigada<>();
         this.numVertices = 0;
         this.numAristas = 0;
+    }
+
+    /**
+     * Método que recibe un string y busca el vértice que tenga ese string como nombre.
+     * @param nombre El nombre del vértice buscado.
+     * @return el vértice buscado si es que existe, null en otro caso.
+     */
+    public T buscarPorNombre(String nombre) {
+        int totalVertices = this.numVertices;
+
+        for(int i = 0; i < totalVertices; i++) {
+            Vertice actual = (Vertice) this.vertices.acceder(i);
+
+            if(actual.nombre.toString().trim().equalsIgnoreCase(nombre.trim())) {
+                return actual.nombre;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -444,9 +452,21 @@ public class GraficaLista<T> implements Grafica<T> {
 
         Vertice vInicio = null;
         Vertice vFin = null;
-        for (Vertice v : this.vertices) {
-            if (v.nombre.equals(inicio)) vInicio = v;
-            if (v.nombre.equals(fin)) vFin = v;
+        String nombreInicio = inicio.toString().trim();
+        String nombreFin = fin.toString().trim();
+
+        // Recorremos los vértices usando tu lista
+        for (int i = 0; i < this.numVertices; i++) {
+            Vertice v = (Vertice) this.vertices.acceder(i);
+            String nombreVertice = v.nombre.toString().trim();
+
+            // Comparamos sin importar mayúsculas, minúsculas o espacios extra
+            if (nombreVertice.equalsIgnoreCase(nombreInicio)) {
+                vInicio = v;
+            }
+            if (nombreVertice.equalsIgnoreCase(nombreFin)) {
+                vFin = v;
+            }
         }
 
         if (vInicio == null || vFin == null) {
@@ -494,7 +514,7 @@ public class GraficaLista<T> implements Grafica<T> {
             throw new IllegalArgumentException("No hay una ruta disponible entre esas estaciones.");
         }
 
-        // Se reconstruye el camino hacia atrás
+        // Reconstruimos el camino hacia atrás
         ListaDoblementeLigada<T> caminoInverso = new ListaDoblementeLigada<>();
         T nodoActual = fin;
         while (nodoActual != null) {
@@ -510,7 +530,7 @@ public class GraficaLista<T> implements Grafica<T> {
             nodoActual = pred;
         }
 
-        // Se invierte el orden del camino usando la estructura Pila
+        // Volteamos el camino usando la Pila
         ListaDoblementeLigada<T> camino = new ListaDoblementeLigada<>();
         Pila<T> pilaReversa = new Pila<>();
         for (T nodo : caminoInverso) {
@@ -547,7 +567,7 @@ public class GraficaLista<T> implements Grafica<T> {
         ListaDoblementeLigada<ParPredecesor> predecesores = new ListaDoblementeLigada<>();
         ListaDoblementeLigada<T> noVisitados = new ListaDoblementeLigada<>();
 
-        // Se inicializan los datos para el algoritmo de Dijkstra
+        // Inicialización de Dijkstra
         for (Vertice v : this.vertices) {
             if (v.nombre.equals(inicio)) {
                 distancias.agregarFinal(new ParDistancia(v.nombre, 0));
@@ -559,7 +579,7 @@ public class GraficaLista<T> implements Grafica<T> {
         }
 
         while (true) {
-            // Se verifica si quedan nodos no visitados
+            // Verificar si quedan nodos no visitados
             int count = 0;
             for (T nv : noVisitados) count++;
             if (count == 0) break;
@@ -567,7 +587,7 @@ public class GraficaLista<T> implements Grafica<T> {
             T actual = null;
             int distMin = -1;
 
-            // Se obtiene el nodo con la distancia mínima
+            // Obtener el nodo con la distancia mínima
             for (T nv : noVisitados) {
                 int d = -1;
                 for (ParDistancia pd : distancias) {
@@ -588,7 +608,7 @@ public class GraficaLista<T> implements Grafica<T> {
                 break; // No hay más nodos alcanzables
             }
 
-            // Se elimina el actual de la lista de no visitados
+            // Eliminar el actual de la lista de no visitados
             int idx = 0;
             int idxAEliminar = -1;
             for (T nv : noVisitados) {
@@ -610,7 +630,7 @@ public class GraficaLista<T> implements Grafica<T> {
                 }
             }
 
-            // Se actualizan las distancias de los vecinos
+            // Actualizar distancias de los vecinos
             for (Adyacencia ady : vActual.adyacencias) {
                 boolean estaEnNoVisitados = false;
                 for (T nv : noVisitados) {
@@ -649,7 +669,7 @@ public class GraficaLista<T> implements Grafica<T> {
             }
         }
 
-        // Se verifica si fue posible llegar al destino
+        // Verificamos si pudimos llegar al destino
         int distFin = -1;
         for (ParDistancia pd : distancias) {
             if (pd.vertice.equals(fin)) {
@@ -662,7 +682,7 @@ public class GraficaLista<T> implements Grafica<T> {
             throw new IllegalArgumentException("No hay una ruta disponible entre esas estaciones.");
         }
 
-        // Se reconstruye el camino hacia atrás y se invierte
+        // Reconstruimos el camino hacia atrás y lo volteamos
         ListaDoblementeLigada<T> caminoInverso = new ListaDoblementeLigada<>();
         T nodoActual = fin;
         while (nodoActual != null) {

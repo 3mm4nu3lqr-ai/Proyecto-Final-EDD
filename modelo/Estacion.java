@@ -32,4 +32,16 @@ public class Estacion {
         return this.nombre;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+   
+        if (obj instanceof Estacion) {
+            Estacion otro = (Estacion) obj;
+        
+            return this.nombre.trim().equalsIgnoreCase(otro.nombre.trim());
+    }
+    
+    return false;
+}
+
 }
