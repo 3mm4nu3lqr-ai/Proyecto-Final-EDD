@@ -96,4 +96,10 @@ public interface Grafica<T> extends Iterable<T> {
      */
     public int devolverNumeroDeAristas(); 
     
+    /**
+     * Método que devuelve las componentes conexas de la gráfica.
+     *
+     * @return lista de sub-gráficas, donde cada una es una componente conexa.
+     */
+    public ListaDoblementeLigada<Grafica<T>> devolverComponentesConexas();
 }
