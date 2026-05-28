@@ -136,6 +136,9 @@ public class ControladorMetro {
         }
     }
 
+    /**
+     * Método que sirve para poder inicializar la gráfica con la cuál se va a trabajar, considerando los datos de Estaciones.txt y Tramos.txt
+     */
     public void iniciarGrafica() {
         System.out.println("Iniciando...");
 
@@ -148,6 +151,10 @@ public class ControladorMetro {
         this.cargarTramos(archivoTramos);        
     }
 
+    /**
+     * Método que sirve para poder iniciar el programa. Con ayuda de la vista y del modelo, realiza las operaciones necesarias para
+     * satisfacer al usuario.
+     */
     public void iniciar() {
         boolean continuar = true;
 
@@ -166,7 +173,9 @@ public class ControladorMetro {
 
                     ListaDoblementeLigada<Estacion> rutaMasCortaNoPonderada = modelo.devolverRutaMasCortaNoPonderada(estInicio, estDestino);
 
-                    System.out.println("La ruta que debe seguir es la siguiente: " + rutaMasCortaNoPonderada.toString());
+                    System.out.println("La ruta que debe seguir es la siguiente: " + rutaMasCortaNoPonderada.toString() + "\n");
+
+                    vista.mostrarMenu();
 
                     break;
                 case 2:
@@ -179,13 +188,40 @@ public class ControladorMetro {
 
                     ListaDoblementeLigada<Estacion> rutaMasCortaPonderada = modelo.rutaMasCortaPonderada(estIni, estDest);
 
-                    System.out.println("La ruta que debe seguir es la siguiente: " + rutaMasCortaPonderada.toString());
+                    System.out.println("La ruta que debe seguir es la siguiente: " + rutaMasCortaPonderada.toString() + "\n");
         
+                    vista.mostrarMenu();
+
                     break;
 
                 case 3:
                     System.out.println("Gracias por usar el sistema del metro!");
                     continuar = false;
+                    break;
+
+                case 4:
+                    ListaDoblementeLigada<Grafica<Estacion>> subgraficas = modelo.devolverComponentesConexas();
+
+                    System.out.println("════════════════════════ \n" +
+                        "  SUBMAPAS DEL METRO  \n" +
+                        "════════════════════════"
+                    );
+
+                    int contador = 1;
+                    for(Grafica<Estacion> subgrafica : subgraficas) {
+                        System.out.println("\n SUBMAPA N°" + contador + ":");
+                        System.out.print("      Estaciones: [ ");
+
+                        for(Estacion actual : subgrafica) {
+                            System.out.print(actual + " ");
+                        }
+
+                        System.out.print("] \n");
+                        contador++;
+                    }
+
+                    vista.mostrarMenu();
+
                     break;
 
                 default:

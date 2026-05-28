@@ -11,7 +11,7 @@ public class VistaMetro {
     }
 
     public void mostrarMenu() {
-        System.out.println("╔═════════════════════════════════╗ \n" + 
+        System.out.println("\n╔═════════════════════════════════╗ \n" + 
         "║ SISTEMA DE TRANSPORTE COLECTIVO ║ \n" +
         "║        METRO DE LA CDMX         ║ \n" +
         "╚═════════════════════════════════╝ \n" +
@@ -20,7 +20,10 @@ public class VistaMetro {
         "\n" +
         "╠═ 1. Mostrar ruta mas corta (menor número de estaciones). \n" +
         "╠═ 2. Mostrar ruta más rápida (menor cantidad de tiempo). \n" +
-        "╠═ 3. Salir."
+        "╠═ 3. Salir. \n" +
+        "╠═ 4. (EXTRA) Mostrar los submapas del metro. \n" +
+        "\n" +
+        "Introduzca la opción que desee."
         );
     }
 
